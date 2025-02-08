@@ -1,0 +1,16 @@
+<mat-nav-list class="w-full">
+  @for (item of linkItems; track $index) {
+    <a
+    [routerLink]="item.routerLink"
+    routerLinkActive
+    #linkItem="routerLinkActive"
+    [activated]="linkItem.isActive"
+    mat-list-item
+  >
+    {{ item.label }}
+  </a>
+  }
+
+  
+  <a (click)="logout()" mat-list-item> Cerrar sesión</a>
+</mat-nav-list>

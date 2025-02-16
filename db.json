@@ -1,0 +1,92 @@
+{
+  "courses": [
+    {
+      "id": "2806",
+      "name": "HTML"
+    },
+    {
+      "id": "64aa",
+      "name": "MongoDB"
+    },
+    {
+      "id": "5690",
+      "name": "React"
+    },
+    {
+      "id": "9db2",
+      "name": "SQL"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "1120",
+      "name": "Fernando Espinoza",
+      "mail": "fernandoespinoza@gmail.com",
+      "phone": 123454667,
+      "courseId": "2806"
+    },
+    {
+      "id": "3044",
+      "name": "Ricardo Juarez",
+      "mail": "ricardojuarez@gmail.com",
+      "phone": 123454668,
+      "courseId": "2806"
+    }
+  ],
+  "students": [
+    {
+      "id": "836f",
+      "name": "test",
+      "lastName": "test",
+      "age": 18,
+      "mail": "test@mail"
+    },
+    {
+      "id": "a310",
+      "name": "Benjamin",
+      "lastName": "Lopez",
+      "age": 19,
+      "mail": "benjamin@gmail.com"
+    },
+    {
+      "id": "8a5d",
+      "name": "Juan",
+      "lastName": "Perez",
+      "age": 18,
+      "mail": "juanPerez@mail.com"
+    },
+    {
+      "id": "b0ac",
+      "name": "Roger",
+      "lastName": "Valor",
+      "age": 22,
+      "mail": "roger22@gmail.com"
+    }
+  ],
+  "enrollments": [
+    {
+      "id": "a567",
+      "studentId": "836f",
+      "courseId": "2806",
+      "status": "active"
+    },
+    {
+      "id": "a587",
+      "studentId": "a310",
+      "courseId": "2806",
+      "status": "active"
+    },
+    {
+      "id": "a111",
+      "studentId": "8a5d",
+      "courseId": "5690",
+      "status": "active"
+    },
+    {
+      "id": "b445",
+      "studentId": "b0ac",
+      "courseId": "5690",
+      "status": "active"
+    }
+  ]
+}

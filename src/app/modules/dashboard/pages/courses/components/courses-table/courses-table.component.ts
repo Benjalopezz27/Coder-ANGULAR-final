@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from '../../models/index';
+import { AuthService } from '../../../../../../core/services/auth.service';
+import { map, Observable } from 'rxjs';
 
 
 @Component({
@@ -22,5 +24,10 @@ export class CoursesTableComponent {
 
 
   displayedColumns: string[] = ['id','name','actions'];
-  
+
+  isAdmin$: Observable<boolean>
+  constructor(private authService: AuthService) {
+    this.isAdmin$ = this.authService.isAdmin$
+    
+  }
 }

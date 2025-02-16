@@ -2,7 +2,7 @@
 @if (isLoading) {
     <mat-spinner />
 } @else {
-    <button (click)="openFormDialog()" mat-flat-button>
+    <button (click)="openFormDialog()" mat-flat-button [disabled]="!(isAdmin$ | async)">
         Crear Curso
     </button>
     <app-courses-table [dataSource]="Courses" (delete)="onDelete($event)" (edit)="openFormDialog($event)"></app-courses-table>

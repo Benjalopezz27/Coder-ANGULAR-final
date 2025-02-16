@@ -23,13 +23,17 @@ export class StudentDialogFormComponent {
     this.studentForm = this.fb.group({
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
+      age: [null, [Validators.required, Validators.min(10)]],
+      mail: [null, [Validators.required, Validators.email]],
     });
 
     if (!!data) {
-      this.isEditing = true;
+      this.isEditing = true
       this.studentForm.patchValue({
         name: data.name,
         lastName: data.lastName,
+        age: data.age,
+        mail: data.mail
       });
     }
   }

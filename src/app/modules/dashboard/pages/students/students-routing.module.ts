@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { StudentsComponent } from './students.component';
 import { StudentDetailComponent } from './pages/student-detail/student-detail.component';
 
-// La ruta base actual es "/dashboard/students"
 
 const routes: Routes = [
   {
@@ -11,7 +10,7 @@ const routes: Routes = [
     component: StudentsComponent,
   },
   {
-    // El path conformado es /dashboard/students/ID
+
     path: ':id',
     component: StudentDetailComponent,
   },

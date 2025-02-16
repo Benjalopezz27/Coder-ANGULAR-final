@@ -1,0 +1,55 @@
+@if (isLoading){
+    <div class="d-flex justify-content-center">
+        <mat-spinner></mat-spinner>
+    </div>
+} @else {
+    @if(errorMessage){
+        <div class="alert alert-danger" role="alert">
+            {{errorMessage}}
+        </div>
+    } @else {
+            <h2 class="display-4 text-center">{{course?.name}}</h2>
+            
+            <div class="course-detail-container">
+                <div class="card-header">
+                    <h4>Profesores</h4>
+                </div>
+                <mat-accordion>
+                    @for (teacher of course?.teachers; track $index) {
+                        
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header class="expasion-header">
+                              <mat-panel-title> {{teacher.name}}</mat-panel-title>
+                                  <mat-panel-description>ID: {{teacher.id}}  </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li>Mail: {{teacher.mail}}</li>
+                                <li>Telefono: {{teacher.phone}}</li>
+                            </ul>
+                            
+                            
+
+                        </mat-expansion-panel>
+                        }
+                      
+                  </mat-accordion>
+                
+                <div class="card-header">
+                    <h4>Estudiantes Inscriptos</h4>
+                </div>
+                <mat-accordion>
+                    @for (student of course?.students; track $index) {
+                        
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header class="expasion-header">
+                              <mat-panel-title> {{student.name}} {{student.lastName}} </mat-panel-title>
+                                  <mat-panel-description> {{student.id}}  </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            info del estudiante
+                        </mat-expansion-panel>
+                        }
+                      
+                  </mat-accordion>
+            </div>
+    }
+}

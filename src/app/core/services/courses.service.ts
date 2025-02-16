@@ -1,46 +1,31 @@
 import { Injectable } from "@angular/core";
-import { delay, Observable, of } from "rxjs";
+import { concat, concatMap, delay, Observable, of } from "rxjs";
 import { Course } from "../../modules/dashboard/pages/courses/models";
-import { generateRandomString } from "../../shared/utils";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment.development";
 
-let MY_FAKE_BASADATE: Course[]= [
-    {
-        id:generateRandomString(6),
-        name: 'JavaScript'
-    },
-    {
-        id: generateRandomString(6),
-        name: 'Angular'
-    },
-    {
-        id:generateRandomString(6),
-        name:'RxJS'
-    }
-]
 
 
 @Injectable({ providedIn: "root"})
 export class CoursesService {
 
+constructor(private httpClient: HttpClient){}
+
 updateCourseById(id: string, data:{ name: string } ): Observable<Course[]>{
-        MY_FAKE_BASADATE = MY_FAKE_BASADATE.map((course) => 
-           course.id === id ? {...course, ...data} : course
-        )
-        return this.getCourses()
+    return this.httpClient.patch<Course>(`${environment.baseApiUrl}/courses/${id}`, data).pipe(concatMap(() => this.getCourses()));
         
       }
 addCourse(payload: {name: string}): Observable<Course[]>{
-    MY_FAKE_BASADATE.push({
-        ...payload,
-        id: generateRandomString(6)
-    })
-    return this.getCourses()
+    return this.httpClient.post<Course[]>(`${environment.baseApiUrl}/courses`, payload).pipe(concatMap(()=>this.getCourses()))
 }
 getCourses(): Observable<Course[]> {
-    return of([...MY_FAKE_BASADATE]).pipe(delay(200))
+    return this.httpClient.get<Course[]>(`${environment.baseApiUrl}/courses`)
 }
 deleteCourseByID(id:string): Observable<Course[]>{
-    MY_FAKE_BASADATE = MY_FAKE_BASADATE.filter(course => course.id != id)
-    return this.getCourses()
+     return this.httpClient.delete(`${environment.baseApiUrl}/courses/${id}`).pipe(concatMap(() => this.getCourses()));
+}
+getCourseDetails(id:string): Observable<Course>{
+
+return this.httpClient.get<Course>(`${environment.baseApiUrl}/courses/${id}?_embed=teachers&_embed=students`)
 }
 }

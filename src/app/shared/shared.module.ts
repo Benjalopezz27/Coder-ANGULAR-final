@@ -12,6 +12,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [FullNamePipe, HighlightDirective, MultiplyDirective],
@@ -28,7 +30,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
+    MatExpansionModule
   ],
 })
 export class SharedModule {}

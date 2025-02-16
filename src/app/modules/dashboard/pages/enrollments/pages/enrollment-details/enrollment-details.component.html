@@ -1,0 +1,19 @@
+<h2>Detalles de la inscripcion</h2>
+
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="enrollment">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Detalles de la inscripcion</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Id:</strong> {{ enrollment.id }}</p>
+        <p><strong>Estudiante:</strong> {{ enrollment.studentId }}</p>        
+        <p><strong>Curso:</strong> {{ enrollment.courseId }}</p>
+        <p><strong>Estado:</strong> {{ enrollment.status }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>

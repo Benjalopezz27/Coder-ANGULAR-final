@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Student } from '../../models';
+import { StudentsService } from '../../../../../../core/services/students.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-student-detail',
@@ -8,16 +11,31 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './student-detail.component.html',
   styles: ``,
 })
-export class StudentDetailComponent {
-  studentId: string;
-  fullName: string;
+export class StudentDetailComponent implements OnInit {
+  student: Student | null = null
+  errorMessage = ''
 
-  constructor(private activatedRoute: ActivatedRoute) {
-    console.log(this.activatedRoute);
-    this.studentId = this.activatedRoute.snapshot.params['id'];
-    const name = this.activatedRoute.snapshot.queryParams['name'];
-    const lastName = this.activatedRoute.snapshot.queryParams['lastName'];
-
-    this.fullName = `${name} ${lastName}`;
+  constructor(private studentService: StudentsService, private route: ActivatedRoute){}
+  isLoading = false
+  ngOnInit(): void {
+    this.isLoading = true
+    this.studentService.getStudentDetails(this.route.snapshot.params['id']).subscribe({
+      next: (data) => {
+        this.student = data
+        this.errorMessage = ''
+      },
+      complete: () => {
+        this.isLoading = false
+      },
+      error: (err) => {
+        this.isLoading = false
+        if(err instanceof HttpErrorResponse){
+              if(err.status === 404){
+                this.errorMessage = 'El estudiante no fue encontrado'
+              }
+            }
+      },
+      
+    })
   }
 }

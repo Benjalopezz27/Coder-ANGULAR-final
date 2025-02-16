@@ -1,3 +1,11 @@
-<h2>Detalle del estudiante {{ studentId }}</h2>
-
-<p>{{ fullName }}</p>
+@if(isLoading){
+    <mat-spinner/>
+} @else {
+    @if(errorMessage){
+        <p>{{errorMessage}}</p>	
+    } @else {
+        <h2>{{student?.name}} {{student?.lastName}}</h2>
+        <p>Edad: {{student?.age}}</p>
+        <p>Mail: {{student?.mail}}</p>
+        }
+    }

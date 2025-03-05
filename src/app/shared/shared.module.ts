@@ -14,6 +14,8 @@ import {MatInputModule} from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [FullNamePipe, HighlightDirective, MultiplyDirective],
@@ -32,7 +34,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatInputModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSelectModule,
+
   ],
 })
 export class SharedModule {}

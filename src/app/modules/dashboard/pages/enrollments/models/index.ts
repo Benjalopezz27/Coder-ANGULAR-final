@@ -1,6 +1,10 @@
+import { Course } from "../../courses/models";
+import { Student } from "../../students/models";
+
 export interface Enrollment {
     id: string;
     studentId: string;
     courseId: string;
-    status: "active" | "inactive" | "pending";
+    course?: Course
+    student?: Student
 }

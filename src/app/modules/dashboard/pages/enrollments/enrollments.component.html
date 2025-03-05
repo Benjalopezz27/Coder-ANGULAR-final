@@ -11,71 +11,33 @@
           {{ errorMessage }}
         </div>
       } @else {
-
-        <div class="row">
-            <div class="col-md-6">
-              <h4>Filtrar Inscripciones</h4>
-              <form [formGroup]="searchForm" (ngSubmit)="filter()">
-                <div class="form-group">
-                  <label for="cursoId">Curso</label>
-                  <select formControlName="courseId" class="form-control" id="cursoId">
-                    <option value="">Selecciona un curso</option>
-                    @for (course of cursos; track $index) {
-                      <option value="{{ course.id }}">{{ course.name }}</option>
-                    }
-                    
-                  </select>
-                </div>
-                <button type="submit" class="btn btn-primary m-2">Filtrar</button>
-              </form>
+          <form [formGroup]="enrollmentForm" (ngSubmit)="onSubmit()">
+            <div>
+              <mat-form-field>
+                <mat-label>Curso</mat-label>
+                <mat-select formControlName="courseId">
+                  <mat-option [value]="course.id" *ngFor="let course of courses">
+                    {{course.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-          </div>
-        <div class="d-flex justify-content-end">
-          <button (click)="openFormDialog()" mat-button>
-            Agregar inscripcion
-          </button>
-        </div>
-          <div class="row mt-4">
-            <div class="col-md-12">
-              <h4>Inscripciones</h4>
-              <div *ngIf="inscripciones.length === 0" class="alert alert-info">
-                No hay inscripciones registradas.
-              </div>
-              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-              
-                <ng-container matColumnDef="Course">
-                  <th mat-header-cell *matHeaderCellDef> Curso </th>
-                  <td mat-cell *matCellDef="let element"> {{element.courseId}} </td>
-                </ng-container>
-              
-              
-                <ng-container matColumnDef="Student">
-                  <th mat-header-cell *matHeaderCellDef> Estudiante </th>
-                  <td mat-cell *matCellDef="let element"> {{element.studentId}} </td>
-                </ng-container>
-                <ng-container matColumnDef="Status">
-                  <th mat-header-cell *matHeaderCellDef> Estado </th>
-                  <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="Actions">
-                  <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                  <td mat-cell *matCellDef="let element"> <button *ngIf="element.status != 'pending'" routerLink="{{element.id}}" mat-icon-button><mat-icon>visibility</mat-icon></button> 
-                  <div *ngIf=" element.status === 'pending'">
-                    <button (click)="changeStatus(element,'active')" class="btn btn-success">Confirmar</button>
-                    <button (click)="changeStatus(element, 'inactive')" class="btn btn-danger">Rechazar</button>
-                  </div>
-                  
-                  </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-              
-              
+            <div>
+              <mat-form-field >
+                <mat-label>Estudiante</mat-label>
+                <mat-select formControlName="studentId">
+                  <mat-option [value]="student.id" *ngFor="let student of students">
+                    {{student.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-          </div>
+            <div>
+              <button type="submit"  [disabled]="!(isAdmin$ | async)" mat-flat-button>Guardar</button>
+            </div>
+          </form>
+        
+          <app-enrollment-table [dataSource]="inscripciones" (delete)="onDelete($event)"></app-enrollment-table>
       }
     }
-  
    

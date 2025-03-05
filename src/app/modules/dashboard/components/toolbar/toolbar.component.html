@@ -1,11 +1,15 @@
 <mat-toolbar >
-  <button
-    (click)="drawerToggle.emit()"
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>Gestor de Estudiantes</span>
+  <div class="d-flex justify-content-between w-100">
+    <div>
+      <button
+        (click)="drawerToggle.emit()"
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Gestor de Estudiantes</span>
+    </div>
+  </div>
 </mat-toolbar>

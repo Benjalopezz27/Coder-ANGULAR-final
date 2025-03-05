@@ -4,37 +4,27 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { User } from '../../modules/dashboard/pages/users/models';
 import { generateRandomString } from '../../shared/utils';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthActions } from '../../store/auth/auth.action';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
+import { AuthState } from '../../store/auth/auth.reducer';
+import { selectAuthUser } from '../../store/auth/auth.select';
 
-const FAKE_USER_DB: User[] = [
-  {
-    id: generateRandomString(6),
-    name: 'Administrador',
-    email: 'admin@gmail.com',
-    password: '123456',
-    accessToken: "AHWGBJBAHAGUgeybuwbceuy",
-    role: 'ADMIN'
-  },
-  {
-    id: generateRandomString(6),
-    name: 'Empleado',
-    email: 'employee@gmail.com',
-    password: '123456',
-    accessToken: "BUBCHbbuhiwcnwkenfkj",
-    role: 'EMPLOYEE'
-  }
-]
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
- private _authUser$ = new BehaviorSubject<User | null>(null)
-authUser$ = this._authUser$.asObservable();
+ authUser$: Observable<User |null>
+  
+  
+  constructor(private httpClient: HttpClient,private router: Router, private store: Store) {
 
-
-constructor(private router: Router) {}
-
+   this.authUser$ = this.store.select(selectAuthUser)
+  }
+  
   get isAdmin$(): Observable<boolean> {
     return this.authUser$.pipe(
       map(user => user?.role === 'ADMIN')
@@ -42,30 +32,38 @@ constructor(private router: Router) {}
   }
   logout(): void {
     localStorage.removeItem('token');
-    this._authUser$.next(null);
+    this.store.dispatch(AuthActions.unsetAuthUser())
     this.router.navigate(['auth', 'login'])
   }
   login(payload: loginPayload):void {
-    const loginResult = FAKE_USER_DB.find(user => user.email === payload.email && user.password === payload.password);
-
-    if(!loginResult){
-      alert('Credenciales incorrectas');
+    this.httpClient.get<User[]>(`${environment.baseApiUrl}/users?email=${payload.email}&password=${payload.password}`).subscribe({
+      next: (users)=>{
+        if(!users[0]){
+          alert('Credenciales incorrectas');
       return;
-  } 
-    localStorage.setItem('token', loginResult.accessToken)
-    this._authUser$.next(loginResult)  
-    this.router.navigate(['dashboard', 'home'])
-
+        } else {
+          localStorage.setItem('token', users[0].accessToken)
+          this.store.dispatch(AuthActions.setAuthUser({user: users[0]}))
+          this.router.navigate(['dashboard', 'home'])
+        }
+      },
+      error: (err)=>{
+        if(err instanceof HttpErrorResponse){
+          if(err.status === 0){
+            alert("El servidor esta caido")
+          }
+        }
+      }
+    })
 }
 isAuthenticated(): Observable<boolean> {
-  
-  const storageUser = FAKE_USER_DB.find(user => user.accessToken === localStorage.getItem('token'));
-  
-  this._authUser$.next(storageUser || null);
-
-  return this.authUser$.pipe(
-    map(user => !!user)
-  )
+  return  this.httpClient.get<User[]>(`${environment.baseApiUrl}/users?accessToken=${localStorage.getItem('token')}`).pipe(map((res)=>{
+    const userResult = res[0]
+    if(userResult){
+      this.store.dispatch(AuthActions.setAuthUser({user: userResult}))
+    }
+    return !!userResult
+  }))
 }
 
 }

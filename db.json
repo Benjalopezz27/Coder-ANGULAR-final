@@ -1,4 +1,28 @@
 {
+  "users": [
+    {
+      "id": "4456",
+      "name": "Empleado",
+      "email": "employee@gmail.com",
+      "password": "23456",
+      "accessToken": "BUBCHbbuhiwcnwkenfkj",
+      "role": "EMPLOYEE"
+    },
+    {
+      "id": "7f10",
+      "name": "benjamin",
+      "email": "benjmain@aa",
+      "role": "ADMIN",
+      "password": "aaaaaa"
+    },
+    {
+      "id": "a82b",
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "role": "ADMIN",
+      "password": "123456"
+    }
+  ],
   "courses": [
     {
       "id": "2806",
@@ -65,28 +89,14 @@
   ],
   "enrollments": [
     {
-      "id": "a567",
-      "studentId": "836f",
-      "courseId": "2806",
-      "status": "active"
-    },
-    {
-      "id": "a587",
+      "id": "90b5",
       "studentId": "a310",
-      "courseId": "2806",
-      "status": "active"
+      "courseId": "2806"
     },
     {
-      "id": "a111",
-      "studentId": "8a5d",
-      "courseId": "5690",
-      "status": "active"
-    },
-    {
-      "id": "b445",
+      "id": "fa13",
       "studentId": "b0ac",
-      "courseId": "5690",
-      "status": "active"
+      "courseId": "64aa"
     }
   ]
 }
